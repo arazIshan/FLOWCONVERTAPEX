@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+  <apiVersion>58.0</apiVersion>
+  <description>Record-Triggered Flow (After Save) on Task. When a Task is marked Completed and Subject contains Onboarding, stamps the related Contact Description field.</description>
+  <label>Task — Onboarding Completed</label>
+  <processType>AutoLaunchedFlow</processType>
+  <status>Active</status>
+
+  <formulas>
+    <name>Formula_OnboardingStamp</name>
+    <dataType>String</dataType>
+    <expression>"[Onboarding task completed: " &amp; TEXT(TODAY()) &amp; "]"</expression>
+  </formulas>
+
+  <start>
+    <locationX>176</locationX>
+    <locationY>48</locationY>
+    <object>Task</object>
+    <triggerType>RecordAfterSave</triggerType>
+    <recordTriggerType>CreateAndUpdate</recordTriggerType>
+    <filterLogic>and</filterLogic>
+    <filters>
+      <field>Status</field>
+      <operator>EqualTo</operator>
+      <value>
+        <stringValue>Completed</stringValue>
+      </value>
+    </filters>
+    <filters>
+      <field>Subject</field>
+      <operator>Contains</operator>
+      <value>
+        <stringValue>Onboarding</stringValue>
+      </value>
+    </filters>
+    <connector>
+      <targetReference>Decision_Is_Related_To_Contact</targetReference>
+    </connector>
+  </start>
+
+  <decisions>
+    <name>Decision_Is_Related_To_Contact</name>
+    <label>Is Task Related to a Contact</label>
+    <locationX>176</locationX>
+    <locationY>168</locationY>
+    <defaultConnectorLabel>No — not a contact</defaultConnectorLabel>
+    <rules>
+      <name>UpdateContact</name>
+      <label>Update Contact</label>
+      <conditionLogic>and</conditionLogic>
+      <conditions>
+        <leftValueReference>$Record.WhoId</leftValueReference>
+        <operator>IsNull</operator>
+        <rightValue>
+          <booleanValue>false</booleanValue>
+        </rightValue>
+      </conditions>
+      <connector>
+        <targetReference>Update_Contact_Description</targetReference>
+      </connector>
+    </rules>
+  </decisions>
+
+  <recordUpdates>
+    <name>Update_Contact_Description</name>
+    <label>Stamp Contact Description</label>
+    <locationX>176</locationX>
+    <locationY>288</locationY>
+    <filterLogic>and</filterLogic>
+    <filters>
+      <field>Id</field>
+      <operator>EqualTo</operator>
+      <value>
+        <elementReference>$Record.WhoId</elementReference>
+      </value>
+    </filters>
+    <inputAssignments>
+      <field>Description</field>
+      <value>
+        <elementReference>Formula_OnboardingStamp</elementReference>
+      </value>
+    </inputAssignments>
+    <object>Contact</object>
+  </recordUpdates>
+
+</Flow>
