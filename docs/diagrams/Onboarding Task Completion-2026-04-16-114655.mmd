@@ -1,0 +1,20 @@
+---
+config:
+  layout: dagre
+---
+graph TD
+    Trigger([Trigger: Task is Saved]) --> CheckStatus{Status == 'Completed'?}
+    
+    CheckStatus -- No --> EndFlow([End Flow])
+    CheckStatus -- Yes --> CheckSubject{Subject contains 'Onboarding'?}
+    
+    CheckSubject -- No --> EndFlow
+    CheckSubject -- Yes --> CheckContact{Related to a Contact?}
+    
+    CheckContact -- No --> EndFlow
+    CheckContact -- Yes --> Assignment[Assign: Append Timestamp Note to Description]
+    
+    Assignment --> UpdateContact[Action: Update Contact Record]
+    UpdateContact --> EndFlow
+
+		
