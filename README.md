@@ -22,10 +22,16 @@ This helps teams track onboarding progress directly on the Contact record withou
   - `TaskOnboardingTrigger.trigger`
   - `TaskOnboardingHandler.cls` (bulkified handler class)
   - `TaskOnboardingHandlerTest.cls` (test class)
-- Complete documentation:
-  - Flow Visualization (Story)
-  - Business Logic Issues & Improvements
-  - Test Guide
+
+All documentation is available inside the **`docs/`** folder:
+
+| File Name                                      | Description |
+|-----------------------------------------------|-----------|
+| `Convert_Flow_To_Apex_Plan.md`                | Full plan and steps for converting the Flow to Apex |
+| `Task_Onboarding_Business_Issues.md`          | Business logic mistakes found in the original Flow + improvements |
+| `Task_Onboarding_Completed_Flow_Test_Guide.md`| Step-by-step testing guide for the Flow |
+| `Task_Onboarding_Flow_Overview.md`            | Complete visualization and story of what the Flow does |
+| `promt.md`                                    | Agentforce / AI prompt used for this task |
 
 ## 📁 Project Structure
 FLOWCONVERTAPEX/
