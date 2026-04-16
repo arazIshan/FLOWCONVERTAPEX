@@ -1,18 +1,46 @@
-# Salesforce DX Project: Next Steps
+# FLOWCONVERTAPEX
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+Salesforce Flow to Apex Conversion Project
 
-## How Do You Plan to Deploy Your Changes?
+## 📋 Project Overview
 
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
+This repository demonstrates the conversion of a **Salesforce Record-Triggered Flow** into clean, production-ready **Apex code**.
 
-## Configure Your Salesforce DX Project
+**Flow Name:** `Task_Onboarding_Completed`
 
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
+### 🎯 Business Purpose
 
-## Read All About It
+When a user completes a Task related to **Onboarding** (Task Status = "Completed" and Subject contains the word "Onboarding"), the system automatically adds a timestamped note to the related **Contact's Description** field.
 
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
+Example note added:
+This helps teams track onboarding progress directly on the Contact record without manual note-taking.
+
+## ✅ What Was Delivered
+
+- Original **Record-Triggered Flow** (`Task_Onboarding_Completed`)
+- Full **Apex Conversion**:
+  - `TaskOnboardingTrigger.trigger`
+  - `TaskOnboardingHandler.cls` (bulkified handler class)
+  - `TaskOnboardingHandlerTest.cls` (test class)
+- Complete documentation:
+  - Flow Visualization (Story)
+  - Business Logic Issues & Improvements
+  - Test Guide
+
+## 📁 Project Structure
+FLOWCONVERTAPEX/
+├── docs/                          # Documentation files
+├── force-app/main/default/
+│   ├── classes/                   # Apex Handler + Test Class
+│   ├── flows/                     # Original Salesforce Flow
+│   └── triggers/                  # Apex Trigger
+├── README.md
+└── package.json
+
+## 🚀 Technologies Used
+
+- Salesforce Platform
+- Apex (Trigger + Handler pattern)
+- Record-Triggered Flow (for comparison)
+- Salesforce DX (SFDX) Project Structure
+
